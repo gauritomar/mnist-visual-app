@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Image Upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var isDrawing = false;
+            
+            canvas.addEventListener('mousedown', function(e) {
+                var rect = canvas.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+                context.beginPath();
+                context.moveTo(x, y);
+                isDrawing = true;
+            });
+            
+            canvas.addEventListener('mousemove', function(e) {
+                if (isDrawing === true) {
+                    var rect = canvas.getBoundingClientRect();
+                    var x = e.clientX - rect.left;
+                    var y = e.clientY - rect.top;
+                    context.lineTo(x, y);
+                    context.stroke();
+                }
+            });
+            
+            canvas.addEventListener('mouseup', function(e) {
+                isDrawing = false;
+            });
+            
+            canvas.addEventListener('mouseleave', function(e) {
+                isDrawing = false;
+            });
+            
+            $('#upload').click(function() {
+                var imageData = canvas.toDataURL('image/png');
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: {imageData: imageData},
+                    success: function(response) {
+                        alert(response);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="border: 1px solid black;"></canvas>
+    <br>
+    <button id="upload">Upload Image</button>
+</body>
+</html>
