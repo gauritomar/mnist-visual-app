@@ -9,6 +9,9 @@
             var context = canvas.getContext('2d');
             var isDrawing = false;
             
+            context.fillStyle = "white";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            
             canvas.addEventListener('mousedown', function(e) {
                 var rect = canvas.getBoundingClientRect();
                 var x = e.clientX - rect.left;
@@ -24,6 +27,9 @@
                     var x = e.clientX - rect.left;
                     var y = e.clientY - rect.top;
                     context.lineTo(x, y);
+                    
+                    // Set pen thickness
+                    context.lineWidth = 20;
                     context.stroke();
                 }
             });
@@ -51,7 +57,7 @@
     </script>
 </head>
 <body>
-    <canvas id="canvas" width="500" height="500" style="border: 1px solid black;"></canvas>
+    <canvas id="canvas" width="500" height="500" style="border: 1px solid black"></canvas>
     <br>
     <button id="upload">Upload Image</button>
 </body>

@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request
 import base64
 import re
+import pickle
 
 app = Flask(__name__)
+
+# with open('visualize_embeddings.pkl', 'rb') as file:
+#     visualize_embeddings = pickle.load(file)
 
 @app.route('/')
 def index():
@@ -22,7 +26,15 @@ def upload():
     with open('uploaded_image.png', 'wb') as f:
         f.write(image_bytes)
 
-    return 'Image uploaded successfully!'
+    # image_path = 'uploaded_image.png'
+    # processed_image = visualize_embeddings.preprocess_image(image_path)
+    
+
+    
+    # visualize_embeddings(processed_image)
+    # plot_path = 'plot.png'
+    # plt.savefig(plot_path)
+
 
 if __name__ == '__main__':
     app.run()
